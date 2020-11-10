@@ -12,7 +12,8 @@
 A small utility for bundling multi-file AI Dungeon scripts. This package allows you to develop AI Dungeon scripts from your desktop using Node.js. The project can then be bundled into a zip file to be uploaded with your scenario with a single command.
 
 You can use any Node library directly inside AID.
-(Note that AID may have some limitations on supported JS versions.)
+
+(Note that AID may have some limitations on supported JS versions. In addition, very large projects, or projects using many libraries might cause large amounts of lag. Scripts are reloaded for each action the user preforms.)
 
 ## Example Project
 
