@@ -27,12 +27,12 @@ npm install --save-dev aid-bundler
 
 After installing, you can use create a `script.zip` bundle for your project by using:
 ```
-npx aid-bundle <your_index.js>
+npx aid-bundler <your_index.js>
 ```
 Or by adding a script inside your package.json
 ```
 "scripts": {
-  "bundle": "aid-bundle index.js"
+  "bundle": "aid-bundler index.js"
 },
 ```
 

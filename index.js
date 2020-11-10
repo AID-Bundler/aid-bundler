@@ -2,7 +2,7 @@
 
 const args = process.argv.slice(2)
 if (args.length !== 1) {
-  console.log('Usage: aid-bundle <main-script-path>')
+  console.log('Usage: aid-bundler <main-script-path>')
   process.exit(1)
 }
 

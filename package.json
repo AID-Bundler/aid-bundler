@@ -4,7 +4,7 @@
   "description": "A small utility for bundling multi-file AI Dungeon scripts.",
   "main": "index.js",
   "bin": {
-    "aid-bundle": "index.js"
+    "aid-bundler": "index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
