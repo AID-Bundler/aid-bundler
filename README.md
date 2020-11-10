@@ -1,5 +1,14 @@
 <h1 align="center">AID Bundler</h1>
 
+<p align="center">
+  <img src="https://github.com/TheDudeFromCI/aid-bundler/workflows/Build/badge.svg" />
+  <img src="https://img.shields.io/npm/v/aid-bundler" />
+  <img src="https://img.shields.io/github/repo-size/TheDudeFromCI/aid-bundler" />
+  <img src="https://img.shields.io/npm/dm/aid-bundler" />
+  <img src="https://img.shields.io/github/contributors/TheDudeFromCI/aid-bundler" />
+  <img src="https://img.shields.io/github/license/TheDudeFromCI/aid-bundler" />
+</p>
+
 A small utility for bundling multi-file AI Dungeon scripts. This package allows you to develop AI Dungeon scripts from your desktop using Node.js. The project can then be bundled into a zip file to be uploaded with your scenario with a single command.
 
 You can use any Node library directly inside AID.
