@@ -1,0 +1,40 @@
+{
+  "name": "aid-bundler",
+  "version": "0.1.0",
+  "description": "A small utility for bundling multi-file AI Dungeon scripts.",
+  "main": "index.js",
+  "bin": {
+    "aid-bundle": "index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheDudeFromCI/aid-bundler.git"
+  },
+  "keywords": [
+    "ai",
+    "ai",
+    "dungeon",
+    "aid",
+    "utility",
+    "bundler"
+  ],
+  "author": "TheDudeFromCI",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TheDudeFromCI/aid-bundler/issues"
+  },
+  "homepage": "https://github.com/TheDudeFromCI/aid-bundler#readme",
+  "dependencies": {
+    "adm-zip": "^0.4.16",
+    "browserify": "^17.0.0",
+    "fs": "0.0.1-security",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "@types/browserify": "^12.0.36",
+    "standard": "^16.0.1"
+  }
+}
