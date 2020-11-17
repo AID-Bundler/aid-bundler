@@ -21,10 +21,12 @@ const contextModFile = './build/contextModifier.js'
 const outputModFile = './build/outputModifier.js'
 const sharedFile = './build/shared.js'
 
+const fileStream = fs.createWriteStream(sharedFile)
+fileStream.on('finish', zip)
+
 const b = browserify(args[0]).bundle()
 b.on('error', errorExit)
-b.on('end', zip)
-b.pipe(fs.createWriteStream(sharedFile))
+b.pipe(fileStream)
 
 function errorExit (err) {
   if (err.stack) {
@@ -45,5 +47,7 @@ function zip () {
   zip.addLocalFile(contextModFile)
   zip.addLocalFile(outputModFile)
   zip.addLocalFile(sharedFile)
-  zip.writeZip(buildDir + '/script.zip')
+  zip.writeZip(buildDir + '/script.zip', (err) => {
+    if (err) console.log(err)
+  })
 }
