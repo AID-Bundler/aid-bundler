@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const { AIDData } = require('./src/aidData')
-const { CommandHandler } = require('./src/commandHandler')
+const { CommandHandler, Command } = require('./src/commandHandler')
 
 class Pipeline {
   constructor () {
@@ -50,7 +50,7 @@ class Pipeline {
 }
 
 class Plugin {
-  constructor (name, inputModifier, contextModifier, outputModifier) {
+  constructor (name, inputModifier = () => {}, contextModifier = () => {}, outputModifier = () => {}) {
     this.name = name
     this.inputModifier = inputModifier
     this.contextModifier = contextModifier
@@ -60,5 +60,6 @@ class Plugin {
 
 module.exports = {
   Pipeline,
-  Plugin
+  Plugin,
+  Command
 }
