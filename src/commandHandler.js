@@ -24,7 +24,6 @@ class CommandHandler {
 
         if (this.hideCommand) {
           data.text = ''
-          data.useAI = false
 
           if (this.declareCommand) {
             const commandText = this.commandPrefix + command.name + (args.length > 0 ? ' ' + args.join(' ') : '')
