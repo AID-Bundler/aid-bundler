@@ -12,7 +12,7 @@ class CommandHandler {
 
   checkCommand (data) {
     const rawText = data.text.trim()
-    const elem = new RegExp(`^\\s*(\\>\\s+)?(you\\s+)?(say\\s+)?(\\")?\\${this.commandPrefix}(\\b\\w+\\b)\\s*(.*?)(\\4)\\s*$`, 'g').exec(rawText)
+    const elem = new RegExp(`^\\s*(\\>\\s+)?([yY]ou\\s+)?(say\\s+)?(\\")?\\${this.commandPrefix}(\\b\\w+\\b)\\s*(.*?)(\\4)(\\.)?\\s*$`, 'g').exec(rawText)
 
     if (!elem) return
 
