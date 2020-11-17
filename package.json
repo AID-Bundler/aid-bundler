@@ -4,11 +4,13 @@
   "description": "A small utility for bundling multi-file AI Dungeon scripts.",
   "main": "index.js",
   "bin": {
-    "aid-bundler": "index.js"
+    "aid-bundler": "cmd.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "standard"
+    "lint": "standard",
+    "require-self": "require-self",
+    "build-example": "require-self && node cmd.js example/pipeline/index.js"
   },
   "repository": {
     "type": "git",
@@ -36,6 +38,7 @@
   },
   "devDependencies": {
     "@types/browserify": "^12.0.36",
+    "require-self": "^0.2.3",
     "standard": "^16.0.1"
   },
   "standard": {

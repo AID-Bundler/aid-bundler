@@ -1,53 +1,59 @@
 #!/usr/bin/env node
 
-const args = process.argv.slice(2)
-if (args.length !== 1) {
-  console.log('Usage: aid-bundler <main-script-path>')
-  process.exit(1)
-}
+const { AIDData } = require('./src/aidData')
 
-const browserify = require('browserify')
-const fs = require('fs')
-const path = require('path')
-const AdmZip = require('adm-zip')
-
-const buildDir = path.dirname('.') + '/build'
-if (!fs.existsSync(buildDir)) {
-  fs.mkdirSync(buildDir)
-}
-
-const inputModFile = './build/inputModifier.js'
-const contextModFile = './build/contextModifier.js'
-const outputModFile = './build/outputModifier.js'
-const sharedFile = './build/shared.js'
-
-const fileStream = fs.createWriteStream(sharedFile)
-fileStream.on('finish', zip)
-
-const b = browserify(args[0]).bundle()
-b.on('error', errorExit)
-b.pipe(fileStream)
-
-function errorExit (err) {
-  if (err.stack) {
-    console.error(err.stack)
-  } else {
-    console.error(String(err))
+class Pipeline {
+  constructor () {
+    this.plugins = []
   }
-  process.exit(1)
+
+  addPlugin (plugin) {
+    this.plugins.push(plugin)
+  }
+
+  build () {
+    global.inputModifier = (text, state, info, worldEntries, history) => {
+      const data = new AIDData(text, state, info, worldEntries, history)
+      
+      for (const plugin of this.plugins) {
+        plugin.inputModifier(data)
+      }
+
+      return data.finalizeOutput()
+    }
+
+    global.contextModifier = (text, state, info, worldEntries, history) => {
+      const data = new AIDData(text, state, info, worldEntries, history)
+      
+      for (const plugin of this.plugins) {
+        plugin.contextModifier(data)
+      }
+
+      return data.finalizeOutput()
+    }
+
+    global.outputModifier = (text, state, info, worldEntries, history) => {
+      const data = new AIDData(text, state, info, worldEntries, history)
+      
+      for (const plugin of this.plugins) {
+        plugin.outputModifier(data)
+      }
+
+      return data.finalizeOutput()
+    }
+  }
 }
 
-function zip () {
-  fs.copyFileSync(require.resolve('./lib/inputModifier.js'), inputModFile)
-  fs.copyFileSync(require.resolve('./lib/contextModifier.js'), contextModFile)
-  fs.copyFileSync(require.resolve('./lib/outputModifier.js'), outputModFile)
+class Plugin {
+  constructor (name, inputModifier, contextModifier, outputModifier) {
+    this.name = name
+    this.inputModifier = inputModifier
+    this.contextModifier = contextModifier
+    this.outputModifier = outputModifier
+  }
+}
 
-  const zip = new AdmZip()
-  zip.addLocalFile(inputModFile)
-  zip.addLocalFile(contextModFile)
-  zip.addLocalFile(outputModFile)
-  zip.addLocalFile(sharedFile)
-  zip.writeZip(buildDir + '/script.zip', (err) => {
-    if (err) console.log(err)
-  })
+module.exports = {
+  Pipeline,
+  Plugin
 }
