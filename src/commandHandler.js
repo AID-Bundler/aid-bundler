@@ -21,7 +21,6 @@ class CommandHandler {
 
     for (const command of this.commands) {
       if (command.name === cmd) {
-
         if (this.hideCommand) {
           data.text = ''
 
