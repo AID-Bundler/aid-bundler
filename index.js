@@ -1,10 +1,12 @@
 #!/usr/bin/env node
 
 const { AIDData } = require('./src/aidData')
+const { CommandHandler } = require('./src/commandHandler')
 
 class Pipeline {
   constructor () {
     this.plugins = []
+    this.commandHandler = new CommandHandler()
   }
 
   addPlugin (plugin) {
@@ -14,9 +16,12 @@ class Pipeline {
   build () {
     global.inputModifier = (text, state, info, worldEntries, history) => {
       const data = new AIDData(text, state, info, worldEntries, history)
+      const command = this.commandHandler.checkCommand(data)
 
-      for (const plugin of this.plugins) {
-        plugin.inputModifier(data)
+      if (!command || !command.stopsPlugins) {
+        for (const plugin of this.plugins) {
+          plugin.inputModifier(data)
+        }
       }
 
       return data.finalizeOutput()
