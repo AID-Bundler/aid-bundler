@@ -14,7 +14,7 @@ class Pipeline {
   build () {
     global.inputModifier = (text, state, info, worldEntries, history) => {
       const data = new AIDData(text, state, info, worldEntries, history)
-      
+
       for (const plugin of this.plugins) {
         plugin.inputModifier(data)
       }
@@ -24,7 +24,7 @@ class Pipeline {
 
     global.contextModifier = (text, state, info, worldEntries, history) => {
       const data = new AIDData(text, state, info, worldEntries, history)
-      
+
       for (const plugin of this.plugins) {
         plugin.contextModifier(data)
       }
@@ -34,7 +34,7 @@ class Pipeline {
 
     global.outputModifier = (text, state, info, worldEntries, history) => {
       const data = new AIDData(text, state, info, worldEntries, history)
-      
+
       for (const plugin of this.plugins) {
         plugin.outputModifier(data)
       }
