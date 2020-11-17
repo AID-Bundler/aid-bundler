@@ -1,6 +1,6 @@
 {
   "name": "aid-bundler",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A small utility for bundling multi-file AI Dungeon scripts.",
   "main": "index.js",
   "bin": {
