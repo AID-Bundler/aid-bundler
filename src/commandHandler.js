@@ -24,7 +24,7 @@ class CommandHandler {
         if (this.hideCommand) {
           data.text = ''
 
-          if (this.declareCommand) {
+          if (!data.message && this.declareCommand) {
             const commandText = this.commandPrefix + command.name + (args.length > 0 ? ' ' + args.join(' ') : '')
             data.message = `Executed ${commandText}`
           }
