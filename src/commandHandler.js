@@ -50,8 +50,10 @@ class CommandHandler {
     const [, cmd, arg = ''] = reCommand(this.commandPrefix).exec(rawText) ?? [];
     if (!cmd) return undefined
 
+    const loCmd = cmd.toLowerCase()
+
     for (const command of this.commands) {
-      if (command.name === cmd) {
+      if (command.name.toLowerCase() === loCmd) {
         const args = splitArgs(arg)
 
         if (this.hideCommand) {
