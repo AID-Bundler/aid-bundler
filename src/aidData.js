@@ -1,3 +1,5 @@
+const $$givenPlayerMemory = Symbol("AIDData.givenPlayerMemory")
+
 class AIDData {
   constructor (text, state, info, worldEntries, history, memory) {
     this.text = text
@@ -6,6 +8,7 @@ class AIDData {
     this.worldEntries = worldEntries
     this.history = history
     this.playerMemory = memory
+    this[$$givenPlayerMemory] = memory
     this.useAI = true
     delete state.message
   }
@@ -23,6 +26,10 @@ class AIDData {
 
   get message () {
     return this.state.message
+  }
+
+  get givenPlayerMemory () {
+    return this[$$givenPlayerMemory]
   }
 
   get actionCount () {
