@@ -60,8 +60,8 @@ class CommandHandler {
           data.text = ''
 
           if (!data.message && this.declareCommand) {
-            const commandText = this.commandPrefix + command.name + (args.length > 0 ? ' ' + args.join(' ') : '')
-            data.message = `Executed ${commandText}`
+            const commandParts = [command.name, ...args]
+            data.message = `Executed ${this.commandPrefix}${commandParts.join(' ')}`
           }
         }
 
