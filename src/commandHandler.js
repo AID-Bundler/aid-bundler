@@ -44,10 +44,10 @@ class CommandHandler {
   }
 
   checkCommand (data) {
-    const [, rawText] = reRemoveFluff.exec(data.text.trim()) ?? [];
+    const [, rawText] = reRemoveFluff.exec(data.text.trim()) ?? []
     if (!rawText) return undefined
 
-    const [, cmd, arg = ''] = reCommand(this.commandPrefix).exec(rawText) ?? [];
+    const [, cmd, arg = ''] = reCommand(this.commandPrefix).exec(rawText) ?? []
     if (!cmd) return undefined
 
     const loCmd = cmd.toLowerCase()
