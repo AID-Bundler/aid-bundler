@@ -28,7 +28,7 @@ const reRemoveFluff = /^(?:\s*|\>\s+)?(?:[yY]ou\s+)?(?:say\s+)?"?(.+?)"?$/
 const splitArgs = (arg) => {
   arg = arg.trim()
   if (!arg) return []
-  return arg.trim().match(/(?:[^\s"]+|"[^"]*")+/g) ?? []
+  return arg.match(/(?:[^\s"]+|"[^"]*")+/g) ?? []
 }
 
 class CommandHandler {
