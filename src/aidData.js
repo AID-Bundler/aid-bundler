@@ -1,6 +1,9 @@
+const $$givenText = Symbol('AIDData.givenText')
+
 class AIDData {
   constructor (text, state, info, worldEntries, history) {
     this.text = text
+    this[$$givenText] = text
     this.state = state
     this.info = info
     this.worldEntries = worldEntries
@@ -22,6 +25,10 @@ class AIDData {
 
   get message () {
     return this.state.message
+  }
+
+  get givenText () {
+    return this[$$givenText]
   }
 
   get actionCount () {
