@@ -1,10 +1,11 @@
 class AIDData {
-  constructor (text, state, info, worldEntries, history) {
+  constructor (text, state, info, worldEntries, history, memory) {
     this.text = text
     this.state = state
     this.info = info
     this.worldEntries = worldEntries
     this.history = history
+    this.playerMemory = memory
     this.useAI = true
     delete state.message
   }
