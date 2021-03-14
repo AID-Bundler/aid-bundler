@@ -1,4 +1,4 @@
-const $$givenText = Symbol("AIDData.givenText")
+const $$givenText = Symbol('AIDData.givenText')
 
 class AIDData {
   constructor (text, state, info, worldEntries, history) {
