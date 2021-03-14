@@ -1,4 +1,4 @@
-const $$givenPlayerMemory = Symbol("AIDData.givenPlayerMemory")
+const $$givenPlayerMemory = Symbol('AIDData.givenPlayerMemory')
 
 class AIDData {
   constructor (text, state, info, worldEntries, history, memory) {
