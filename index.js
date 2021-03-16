@@ -18,7 +18,7 @@ class Pipeline {
       const data = new AIDData(text, state, info, worldEntries, history, memory)
       const command = this.commandHandler.checkCommand(data)
 
-      if (!command || !command.stopsPlugins) {
+      if (!command?.stopsPlugins) {
         for (const plugin of this.plugins) {
           plugin.inputModifier(data)
         }
