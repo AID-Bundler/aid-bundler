@@ -1,13 +1,16 @@
+const $$givenPlayerMemory = Symbol('AIDData.givenPlayerMemory')
 const $$givenText = Symbol('AIDData.givenText')
 
 class AIDData {
-  constructor (text, state, info, worldEntries, history) {
+  constructor (text, state, info, worldEntries, history, memory) {
     this.text = text
     this[$$givenText] = text
     this.state = state
     this.info = info
     this.worldEntries = worldEntries
     this.history = history
+    this.playerMemory = memory
+    this[$$givenPlayerMemory] = memory
     this.useAI = true
     delete state.message
   }
@@ -25,6 +28,10 @@ class AIDData {
 
   get message () {
     return this.state.message
+  }
+
+  get givenPlayerMemory () {
+    return this[$$givenPlayerMemory]
   }
 
   get givenText () {

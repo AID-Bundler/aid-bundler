@@ -14,8 +14,8 @@ class Pipeline {
   }
 
   build () {
-    global.inputModifier = (text, state, info, worldEntries, history) => {
-      const data = new AIDData(text, state, info, worldEntries, history)
+    global.inputModifier = (text, state, info, worldEntries, history, memory) => {
+      const data = new AIDData(text, state, info, worldEntries, history, memory)
       const command = this.commandHandler.checkCommand(data)
 
       if (!command?.stopsPlugins) {
@@ -27,8 +27,8 @@ class Pipeline {
       return data.finalizeOutput()
     }
 
-    global.contextModifier = (text, state, info, worldEntries, history) => {
-      const data = new AIDData(text, state, info, worldEntries, history)
+    global.contextModifier = (text, state, info, worldEntries, history, memory) => {
+      const data = new AIDData(text, state, info, worldEntries, history, memory)
 
       for (const plugin of this.plugins) {
         plugin.contextModifier(data)
@@ -37,8 +37,8 @@ class Pipeline {
       return data.finalizeOutput()
     }
 
-    global.outputModifier = (text, state, info, worldEntries, history) => {
-      const data = new AIDData(text, state, info, worldEntries, history)
+    global.outputModifier = (text, state, info, worldEntries, history, memory) => {
+      const data = new AIDData(text, state, info, worldEntries, history, memory)
 
       for (const plugin of this.plugins) {
         plugin.outputModifier(data)
