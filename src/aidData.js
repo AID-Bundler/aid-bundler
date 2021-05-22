@@ -1,5 +1,6 @@
 const $$givenText = Symbol('AIDData.givenText')
 const $$givenPlayerMemory = Symbol('AIDData.givenPlayerMemory')
+const $$givenText = Symbol('AIDData.givenText')
 
 class AIDData {
   constructor (text, state, info, worldEntries, history, memory) {
@@ -36,6 +37,10 @@ class AIDData {
 
   get givenPlayerMemory () {
     return this[$$givenPlayerMemory]
+  }
+
+  get givenText () {
+    return this[$$givenText]
   }
 
   get actionCount () {
