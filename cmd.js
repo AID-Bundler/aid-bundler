@@ -6,7 +6,7 @@ if (args.length !== 1) {
   process.exit(1)
 }
 
-const browserify = require('browserify')
+const webpack = require('webpack')
 const fs = require('fs')
 const path = require('path')
 const AdmZip = require('adm-zip')
@@ -21,21 +21,60 @@ const contextModFile = './build/contextModifier.js'
 const outputModFile = './build/outputModifier.js'
 const sharedFile = './build/shared.js'
 
-const fileStream = fs.createWriteStream(sharedFile)
-fileStream.on('finish', zip)
+webpack(
+  {
+    entry: args[0],
+    output: {
+      path: path.resolve(path.dirname(sharedFile)),
+      filename: path.basename(sharedFile)
+    },
+    module: {
+      rules: [
+        {
+          test: /.[mc]?js$/,
+          use: [
+            require.resolve('shebang-loader'),
+            require.resolve('stripcomment-loader')
+          ]
+        }
+      ]
+    },
+    mode: 'production',
+    optimization: {
+      nodeEnv: false,
+      moduleIds: 'named',
+      mangleExports: false,
+      minimize: false
+    }
+  },
+  (err, stats) => {
+    let didError = false
 
-const b = browserify(args[0]).bundle()
-b.on('error', errorExit)
-b.pipe(fileStream)
+    if (err) {
+      console.error(err.stack || err)
+      didError = true
+    }
 
-function errorExit (err) {
-  if (err.stack) {
-    console.error(err.stack)
-  } else {
-    console.error(String(err))
+    const info = stats.toJson()
+
+    if (stats.hasErrors()) {
+      for (const wpError of info.errors) {
+        console.error(wpError.stack || wpError)
+      }
+      didError = true
+    }
+
+    if (stats.hasWarnings()) {
+      for (const wpWarning of info.warnings) {
+        console.warn(wpWarning)
+      }
+    }
+
+    if (!didError) return zip()
+
+    process.exit(1)
   }
-  process.exit(1)
-}
+)
 
 function zip () {
   fs.copyFileSync(require.resolve('./lib/inputModifier.js'), inputModFile)
@@ -48,6 +87,6 @@ function zip () {
   zip.addLocalFile(outputModFile)
   zip.addLocalFile(sharedFile)
   zip.writeZip(buildDir + '/script.zip', (err) => {
-    if (err) console.log(err)
+    if (err) console.error(err)
   })
 }
