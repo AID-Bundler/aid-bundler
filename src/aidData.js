@@ -1,4 +1,3 @@
-const $$givenText = Symbol('AIDData.givenText')
 const $$givenPlayerMemory = Symbol('AIDData.givenPlayerMemory')
 const $$givenText = Symbol('AIDData.givenText')
 
@@ -29,10 +28,6 @@ class AIDData {
 
   get message () {
     return this.state.message
-  }
-
-  get givenText () {
-    return this[$$givenText]
   }
 
   get givenPlayerMemory () {
