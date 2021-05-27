@@ -33,7 +33,6 @@
   "dependencies": {
     "adm-zip": "^0.4.16",
     "shebang-loader": "^0.0.1",
-    "stripcomment-loader": "^0.1.0",
     "webpack": "^5.37.0"
   },
   "devDependencies": {

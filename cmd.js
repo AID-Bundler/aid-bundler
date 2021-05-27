@@ -7,6 +7,7 @@ if (args.length !== 1) {
 }
 
 const webpack = require('webpack')
+const TerserPlugin = require('terser-webpack-plugin')
 const fs = require('fs')
 const path = require('path')
 const AdmZip = require('adm-zip')
@@ -21,6 +22,12 @@ const contextModFile = './build/contextModifier.js'
 const outputModFile = './build/outputModifier.js'
 const sharedFile = './build/shared.js'
 
+// By default, do very little to the output.
+// If built with `NODE_ENV` set to "production", crush the code but
+// preserve names for more readable errors, when they are encountered
+// in an adventure.
+const mode = process.env.NODE_ENV === 'production' ? 'production' : 'none'
+
 webpack(
   {
     entry: args[0],
@@ -32,19 +39,32 @@ webpack(
       rules: [
         {
           test: /.[mc]?js$/,
-          use: [
-            require.resolve('shebang-loader'),
-            require.resolve('stripcomment-loader')
-          ]
+          // Shebangs make the parser unhappy.
+          use: [require.resolve('shebang-loader')]
         }
       ]
     },
-    mode: 'production',
+    mode,
+    devtool: false,
     optimization: {
       nodeEnv: false,
-      moduleIds: 'named',
+      moduleIds: mode === 'production' ? 'natural' : 'named',
       mangleExports: false,
-      minimize: false
+      emitOnErrors: false,
+      minimize: mode === 'production',
+      minimizer: [
+        new TerserPlugin({
+          extractComments: false,
+          terserOptions: {
+            mangle: false,
+            ecma: 2015,
+            format: {
+              // Preserve only important comments (copyright, etc) for production.
+              comments: 'some'
+            }
+          }
+        })
+      ]
     }
   },
   (err, stats) => {
